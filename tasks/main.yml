@@ -1,0 +1,42 @@
+---
+# tasks file for php_installer
+
+  - name: Prerequisites installation
+    apt:
+      pkg:
+        - apt-transport-https
+        - curl
+        - wget
+        - ca-certificates
+      state: present
+      update_cache: yes
+
+  - name: Add deb.sury.org repo key
+    apt_key:
+      url: https://packages.sury.org/php/apt.gpg
+      state: present
+
+  - name: Add deb.sury.org php repo
+    apt_repository:
+      repo: deb https://packages.sury.org/php/ buster main
+      state: present
+      filename: sury-php
+
+  - name: Install php and related packages
+    apt:
+      pkg:
+        - "php{{ php_version }}"
+        - "php{{ php_version }}-fpm"
+        - "php{{ php_version }}-mysql"
+        - "php{{ php_version }}-mbstring"
+        - "php{{ php_version }}-curl"
+        - "php{{ php_version }}-xml"
+        - "php{{ php_version }}-zip"
+        - "php{{ php_version }}-intl"
+        - "php{{ php_version }}-soap"
+        - "php{{ php_version }}-gd"
+      state: present
+      install_recommends: no
+
+
+
